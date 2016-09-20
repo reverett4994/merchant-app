@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+
+<h1><%= @item.name %></h1>
+
+
+<p>
+  <strong>Price:</strong>
+  <%=number_to_currency(@item.price)%>
+</p>
+
+<p>
+  <strong>Des:</strong>
+  <%= @item.des %>
+</p>
+<p>
+  <% if @item.image.file? %>
+    <%= image_tag @item.image.url %>
+  <% end %>
+</p>
+<p>
+  <strong>Seller</strong>
+  <%= @item.user.username %>
+</p>
+<% if @item.user == current_user%>
+  <%= link_to 'Edit', edit_item_path(@item) %>
+<% end %>
+
+
+<h2>Questions or Comments</h2>
