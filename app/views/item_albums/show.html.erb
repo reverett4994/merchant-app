@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Item:</strong>
+  <%= @item_album.item_id %>
+</p>
+<% if @item_album.image.file? %>
+  <%= image_tag @item_album.image.url %>
+<% end %>
+
+<%= link_to 'Edit', edit_item_album_path(@item_album) %> |
+<%= link_to 'Back', item_albums_path %>

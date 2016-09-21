@@ -1,6 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-
+<% if @item.user == current_user%>
+  <%= link_to 'Edit', edit_item_path(@item) %>
+<% end %>
 <h1><%= @item.name %></h1>
 
 
@@ -10,28 +12,40 @@
 </p>
 
 <p>
-  <strong>Des:</strong>
+  <strong>Description:</strong>
   <%= @item.des %>
-</p>
-<p>
-  <% if @item.image.file? %>
-    <%= image_tag @item.image.url %>
-  <% end %>
 </p>
 <p>
   <strong>Seller</strong>
   <%= @item.user.username %>
 </p>
-<% if @item.user == current_user%>
-  <%= link_to 'Edit', edit_item_path(@item) %>
-<% end %>
+<% if  @item.item_album.first %>
+<p>
+  <div class='fullsize_image'>
+    <div><%= image_tag @item.item_album.first.image.url,class:'full_image'%></div>
+  </div>
+
+  <div class="preview_images">
+    <div class=small_image>
+      <%@item.item_album.each do |f| %>
+         <%= image_tag f.image.url %>
+      <% end %>
+
+
+    </div>
+  </div>
+</p>
+<%end%>
+
+
+
 
 
 <h2>Questions or Comments</h2>
 <p>
   <% @comments.each do |comment| %>
     <% if comment.user == @item.user %>
-      (SELLER) <%= comment.user.username %>:
+       <%= comment.user.username %> (SELLER):
     <% else %>
       <%=comment.user.username %>:
     <% end %>
@@ -66,5 +80,5 @@
     </div>
   <% end %>
 <% else %>
-  <p>Login to ask a question or comment </p>
+  <p><%= link_to('Login', new_user_session_path)%> to ask a question or comment </p>
 <% end %>

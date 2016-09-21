@@ -11,6 +11,7 @@ class ItemsController < ApplicationController
   # GET /items/1.json
   def show
     @comment=Comment.new
+    @item_album=ItemAlbum.new
     @comments=Comment.where('ITEM_ID LIKE ?',params[:id])
   end
 
@@ -21,6 +22,8 @@ class ItemsController < ApplicationController
 
   # GET /items/1/edit
   def edit
+    @item_album=ItemAlbum.new
+
   end
 
   # POST /items

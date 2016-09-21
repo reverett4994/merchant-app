@@ -13,3 +13,24 @@
  *= require_tree .
  *= require_self
  */
+ .small_image{
+   display: inline-block;
+ }
+.preview_images img{
+  display: inline-block;
+  max-width: 80px;
+  max-height: 80px;
+}
+.fullsize_image{
+  height: 501px;
+  width:66%;
+}
+.full_image {
+  max-height: 500px;
+  max-width: 600px;
+}
+
+.edit_pic{
+  max-width: 500px;
+  max-height: 500px;
+}

@@ -1,0 +1,62 @@
+<% if @item.user == current_user%>
+  <%= form_for(@item) do |f| %>
+    <% if @item.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+        <ul>
+        <% @item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :name,'Title' %><br>
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label :price,'Price (USD)' %><br>
+      <%= f.text_field :price %>
+    </div>
+    <div class="field">
+      <%= f.label :des,'Description' %><br>
+      <%= f.text_area :des %>
+    </div>
+    <div class="actions">
+      <%= f.submit 'Edit Listing' %>
+    </div>
+
+  <% end %>
+  <h2>Add images for your item here!(one at a time up to forever)</h2>
+  <%= form_for(@item_album) do |f| %>
+    <% if @item_album.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@item_album.errors.count, "error") %> prohibited this item_album from being saved:</h2>
+        <ul>
+        <% @item_album.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <%= hidden_field_tag(:item, params[:id]) %>
+    <%= f.file_field :image %>
+    <div class="actions">
+      <%= f.submit "Add Image" %>
+    </div>
+  <% end %>
+  </div>
+  <h2>Remove any current pictures</h2>
+  <%@item.item_album.each do |f| %>
+    <table>
+     <tr>
+       <th><%= image_tag f.image.url,class:'edit_pic' %></th>
+     </tr>
+     <tr>
+       <th><%= link_to 'Remove Picture', f, method: :delete, data: { confirm: 'Are you sure?' } %></th>
+     </tr>
+   </table>
+  <% end %>
+<%end%>

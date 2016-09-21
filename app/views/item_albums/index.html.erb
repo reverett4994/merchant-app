@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Item Albums</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @item_albums.each do |item_album| %>
+      <tr>
+        <td><%= item_album.item_id %></td>
+        <td><%= link_to 'Show', item_album %></td>
+        <td><%= link_to 'Edit', edit_item_album_path(item_album) %></td>
+        <td><%= link_to 'Destroy', item_album, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Item album', new_item_album_path %>

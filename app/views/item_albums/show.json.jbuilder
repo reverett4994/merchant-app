@@ -1,0 +1,1 @@
+json.partial! "item_albums/item_album", item_album: @item_album

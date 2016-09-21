@@ -12,20 +12,20 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
+    <%= f.label :name,'Title' %><br>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :price %><br>
+    <%= f.label :price,'Price (USD)' %><br>
     <%= f.text_field :price %>
   </div>
   <div class="field">
-    <%= f.label :des %><br>
+    <%= f.label :des,'Description' %><br>
     <%= f.text_area :des %>
   </div>
-  <%= f.file_field :image %>
+<h3>Add images on edit page</h3>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'List Item' %>
   </div>
 
 <% end %>
