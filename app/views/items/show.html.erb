@@ -28,3 +28,43 @@
 
 
 <h2>Questions or Comments</h2>
+<p>
+  <% @comments.each do |comment| %>
+    <% if comment.user == @item.user %>
+      (SELLER) <%= comment.user.username %>:
+    <% else %>
+      <%=comment.user.username %>:
+    <% end %>
+    <%=comment.content %>
+    <% if comment.user == current_user %>
+      <%= link_to 'Delete', comment, method: :delete, data: { confirm: 'Are you sure you want to delete this comment?' } %>
+    <% end %>
+    <br>
+  <% end %>
+</p>
+<% if user_signed_in? %>
+  <%= form_for(@comment) do |f| %>
+    <% if @comment.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+        <ul>
+        <% @comment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :content, 'Ask Question or Comment' %><br>
+      <%= f.text_area :content %>
+    </div>
+    <%= hidden_field_tag(:item, params[:id]) %>
+    <div class="actions">
+      <%= f.submit 'Submit'  %>
+    </div>
+  <% end %>
+<% else %>
+  <p>Login to ask a question or comment </p>
+<% end %>

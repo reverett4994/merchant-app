@@ -10,6 +10,8 @@ class ItemsController < ApplicationController
   # GET /items/1
   # GET /items/1.json
   def show
+    @comment=Comment.new
+    @comments=Comment.where('ITEM_ID LIKE ?',params[:id])
   end
 
   # GET /items/new

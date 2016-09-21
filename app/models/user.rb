@@ -7,4 +7,5 @@ class User < ActiveRecord::Base
          :confirmable, :lockable
 
          has_many :items
+         has_many :comments
 end
