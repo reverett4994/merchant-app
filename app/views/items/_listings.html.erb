@@ -1,0 +1,48 @@
+<%= link_to dog do %>
+  <div class='listing'>
+    <% if  dog.item_album.first %>
+      <%= image_tag dog.item_album.first.image.url,class:'listing_pic'%>
+    <%end%>
+    <ul>
+      <li id='dog_name'class='sliding-middle-out'><%= dog.name%></li>
+      <li><strong>Breed</strong>: <%=dog.breed%></li>
+      <li><strong>Gender</strong>: <%=dog.gender%></li>
+      <li><strong>Age(months)</strong>: <%=dog.age%></li>
+      <li><strong>Price</strong>: <%=number_to_currency(dog.price)%></li>
+      <li>
+        <% time_diffrence_comment=TimeDifference.between(dog.created_at, Time.current).in_general %>
+
+        <% if TimeDifference.between(dog.created_at,  Time.current).in_seconds<60 %>
+            <% time_diffrence_comment=TimeDifference.between(dog.created_at, Time.current).in_seconds %>
+            Listed About <%=time_diffrence_comment.to_i%> seconds ago
+
+        <% elsif TimeDifference.between(dog.created_at,  Time.current).in_minutes<60 %>
+            <% time_diffrence_comment=TimeDifference.between(dog.created_at, Time.current).in_minutes %>
+             Listed About <%=time_diffrence_comment.to_i%> minutes ago
+
+        <% elsif TimeDifference.between(dog.created_at,  Time.current).in_hours<24 %>
+            <% time_diffrence_comment=TimeDifference.between(dog.created_at, Time.current).in_hours %>
+             Listed About <%=time_diffrence_comment.to_i%> hours ago
+
+        <% elsif TimeDifference.between(dog.created_at,  Time.current).in_days<30 %>
+            <% time_diffrence_comment=TimeDifference.between(dog.created_at, Time.current).in_days %>
+             Listed About <%=time_diffrence_comment.to_i%> days ago
+
+        <% elsif TimeDifference.between(dog.created_at,  Time.current).in_months<12 %>
+            <% time_diffrence_comment=TimeDifference.between(dog.created_at, Time.current).in_months %>
+             Listed About <%=time_diffrence_comment.to_i%> months ago
+
+        <% elsif TimeDifference.between(dog.created_at,  Time.current).in_months<12 %>
+            <% time_diffrence_comment=TimeDifference.between(dog.created_at, Time.current).in_years%>
+             Listed About <%=time_diffrence_comment.to_i%> years ago
+        <%end%>
+      </li>
+
+    </ul>
+    <ul class='location'>
+      <li id='dog_name'class='sliding-middle-out'>Location</li>
+      <li><strong>City</strong>: <%=dog.user.city%></li>
+      <li><strong>State</strong>: <%=dog.user.state%></li>
+    </ul>
+  </div>
+<%end%>

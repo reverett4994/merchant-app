@@ -1,84 +1,209 @@
 <p id="notice"><%= notice %></p>
+<div id='body_div'>
 
-<% if @item.user == current_user%>
-  <%= link_to 'Edit', edit_item_path(@item) %>
-<% end %>
+<div id='gallery'>
+  <% if  @item.item_album.first %>
+  <p>
+    <div class='fullsize_image'>
+      <!-- Trigger the Modal -->
+      <%= image_tag @item.item_album.first.image.url,id:'myImg',class:'full_image'%>
+
+      <!-- The Modal -->
+      <div id="myModal" class="modal">
+
+       <!-- The Close Button -->
+       <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+
+       <!-- Modal Content (The Image) -->
+       <img class="modal-content" id="img01">
+
+       <!-- Modal Caption (Image Text) -->
+
+      </div>
+    </div>
+
+    <div class="preview_images">
+      <div class=small_image>
+        <%@item.item_album.each do |f| %>
+           <%= image_tag f.image.url %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<%end%>
+<div id='dog_info'>
 <h1><%= @item.name %></h1>
+<p>
+  <% time_diffrence_comment=TimeDifference.between(@item.created_at, Time.current).in_general %>
+
+  <% if TimeDifference.between(@item.created_at,  Time.current).in_seconds<60 %>
+      <% time_diffrence_comment=TimeDifference.between(@item.created_at, Time.current).in_seconds %>
+      <p id='tweet_time'>Created About <%=time_diffrence_comment.to_i%> seconds ago</p>
+
+  <% elsif TimeDifference.between(@item.created_at,  Time.current).in_minutes<60 %>
+      <% time_diffrence_comment=TimeDifference.between(@item.created_at, Time.current).in_minutes %>
+       <p id='tweet_time'>Created About <%=time_diffrence_comment.to_i%> minutes ago</p>
+
+  <% elsif TimeDifference.between(@item.created_at,  Time.current).in_hours<24 %>
+      <% time_diffrence_comment=TimeDifference.between(@item.created_at, Time.current).in_hours %>
+       <p id='tweet_time'>Created About <%=time_diffrence_comment.to_i%> hours ago</p>
+
+  <% elsif TimeDifference.between(@item.created_at,  Time.current).in_days<30 %>
+      <% time_diffrence_comment=TimeDifference.between(@item.created_at, Time.current).in_days %>
+       <p id='tweet_time'>Created About <%=time_diffrence_comment.to_i%> days ago</p>
+
+  <% elsif TimeDifference.between(@item.created_at,  Time.current).in_months<12 %>
+      <% time_diffrence_comment=TimeDifference.between(@item.created_at, Time.current).in_months %>
+       <p id='tweet_time'>Created About <%=time_diffrence_comment.to_i%> months ago</p>
+
+  <% elsif TimeDifference.between(@item.created_at,  Time.current).in_months<12 %>
+      <% time_diffrence_comment=TimeDifference.between(@item.created_at, Time.current).in_years%>
+       <p id='tweet_time'>Created About <%=time_diffrence_comment.to_i%> years ago</p>
+  <%end%>
+</p>
+<% if @item.user == current_user%>
+
+  <%= link_to 'Edit Your Listing', edit_item_path(@item) %>
+  <br>
+  <%= link_to "Remove Lising (cannot undo)", @item, method: :delete, data: { confirm: 'Are you sure you want to permanently destroy this listing?' } %>
+<% end %>
+
 
 
 <p>
   <strong>Price:</strong>
   <%=number_to_currency(@item.price)%>
 </p>
-
+<p>
+  <strong>Breed:</strong>
+  <%= @item.breed %>
+</p>
+<p>
+  <strong>Gender:</strong>
+  <%= @item.gender %>
+</p>
+<p>
+  <strong>Age(months):</strong>
+  <%= @item.age %>
+</p>
 <p>
   <strong>Description:</strong>
   <%= @item.des %>
 </p>
+
+
 <p>
   <strong>Seller</strong>
-  <%= @item.user.username %>
+  <%= link_to @item.user.username, "/users/#{@item.user.id}"%>
 </p>
-<% if  @item.item_album.first %>
-<p>
-  <div class='fullsize_image'>
-    <div><%= image_tag @item.item_album.first.image.url,class:'full_image'%></div>
-  </div>
+<strong>Location</strong>
+<%=@item.user.city%>, <%= @item.user.state%>
+<br>
 
-  <div class="preview_images">
-    <div class=small_image>
-      <%@item.item_album.each do |f| %>
-         <%= image_tag f.image.url %>
+</div>
+
+
+
+
+
+
+
+<div id='comments'>
+  <h2>Questions or Comments</h2>
+  <p>
+    <% if @comments.count <1 %>
+      <p>No questions or comments have been posted yet, be the first!</p>
+    <%end%>
+    <% @comments.each do |comment| %>
+      <% if comment.user == @item.user %>
+        <div class='comment'>
+          <%= link_to comment.user.username, "/users/#{comment.user.id}"%>: (SELLER)
+
+        </div>
+      <% else %>
+        <div class='comment'>
+          <%= link_to comment.user.username, "/users/#{comment.user.id}"%>:
+        </div>
+      <% end %>
+      <div class='comment'>
+        <%=comment.content %>
+        <div class='comment_time'>
+          <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_general %>
+
+          <% if TimeDifference.between(comment.created_at,  Time.current).in_seconds<60 %>
+              <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_seconds %>
+              Created About <%=time_diffrence_comment.to_i%> seconds ago
+
+          <% elsif TimeDifference.between(comment.created_at,  Time.current).in_minutes<60 %>
+              <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_minutes %>
+               Created About <%=time_diffrence_comment.to_i%> minutes ago
+
+          <% elsif TimeDifference.between(comment.created_at,  Time.current).in_hours<24 %>
+              <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_hours %>
+               Created About <%=time_diffrence_comment.to_i%> hours ago
+
+          <% elsif TimeDifference.between(comment.created_at,  Time.current).in_days<30 %>
+              <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_days %>
+               Created About <%=time_diffrence_comment.to_i%> days ago
+
+          <% elsif TimeDifference.between(comment.created_at,  Time.current).in_months<12 %>
+              <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_months %>
+               Created About <%=time_diffrence_comment.to_i%> months ago
+
+          <% elsif TimeDifference.between(comment.created_at,  Time.current).in_months<12 %>
+              <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_years%>
+               Created About <%=time_diffrence_comment.to_i%> years ago
+          <%end%>
+        </div>
+        <% if comment.user == current_user %>
+          <%= link_to 'Delete', comment, method: :delete, data: { confirm: 'Are you sure you want to delete this comment?' } %>
+        <% end %>
+      </div>
+
+      <br>
+    <% end %>
+
+  </p>
+  <% if user_signed_in? %>
+    <%= form_for(@comment,remote: true) do |f| %>
+    <div id='create_comment'>
+
+      <% if @comment.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+          <ul>
+          <% @comment.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
 
-
-    </div>
-  </div>
-</p>
-<%end%>
-
-
-
-
-
-<h2>Questions or Comments</h2>
-<p>
-  <% @comments.each do |comment| %>
-    <% if comment.user == @item.user %>
-       <%= comment.user.username %> (SELLER):
-    <% else %>
-      <%=comment.user.username %>:
-    <% end %>
-    <%=comment.content %>
-    <% if comment.user == current_user %>
-      <%= link_to 'Delete', comment, method: :delete, data: { confirm: 'Are you sure you want to delete this comment?' } %>
-    <% end %>
-    <br>
-  <% end %>
-</p>
-<% if user_signed_in? %>
-  <%= form_for(@comment) do |f| %>
-    <% if @comment.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
-
-        <ul>
-        <% @comment.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-        </ul>
+      <div class="field">
+        <%= f.label :content, 'Ask Question or Comment' %><br>
+        <%= f.text_area :content %>
+      </div>
+      <%= hidden_field_tag(:item, params[:id]) %>
+      <div class="actions">
+        <%= f.submit 'Post'  %>
       </div>
     <% end %>
-
-    <div class="field">
-      <%= f.label :content, 'Ask Question or Comment' %><br>
-      <%= f.text_area :content %>
-    </div>
-    <%= hidden_field_tag(:item, params[:id]) %>
-    <div class="actions">
-      <%= f.submit 'Submit'  %>
-    </div>
+  <% else %>
+    <p><%= link_to('Login', new_user_session_path)%> to ask a question or comment </p>
   <% end %>
-<% else %>
-  <p><%= link_to('Login', new_user_session_path)%> to ask a question or comment </p>
-<% end %>
+</div>
+</div>
+
+
+
+
+<%= matrix = GoogleDistanceMatrix::Matrix.new %>
+<% puppy_place = GoogleDistanceMatrix::Place.new address: "08515" %>
+<% hills = GoogleDistanceMatrix::Place.new address: "90210" %>
+
+
+<% matrix.origins << puppy_place %>
+<% matrix.destinations  << hills %>
+
+<% matrix.configure.google_api_key = "AIzaSyDaatx0-jx22kJdnuCQ4IBcbWvet0z293Y"%>

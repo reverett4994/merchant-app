@@ -1,10 +1,22 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
+  WillPaginate.per_page = 3
+
 
   # GET /items
   # GET /items.json
   def index
-    @items = Item.all
+    @sort=params[:sort]
+    if @sort=='price_asc'
+      @items=Item.order('price DESC')
+    elsif @sort=='price_desc'
+      @items=Item.order('price ASC')
+    end
+    if params[:sort]==nil
+      @items = Item.order('created_at DESC')
+    end
+
+    @items = @items.paginate(:page => params[:page])
   end
 
   # GET /items/1
@@ -46,9 +58,9 @@ class ItemsController < ApplicationController
   # PATCH/PUT /items/1.json
   def update
     respond_to do |format|
-      if @item.update(item_params)
-        format.html { redirect_to @item, notice: 'Item was successfully updated.' }
-        format.json { render :show, status: :ok, location: @item }
+        if @item.update(item_params)
+          format.html { redirect_to @item, notice: 'Item was successfully updated.' }
+          format.json { render :show, status: :ok, location: @item }
       else
         format.html { render :edit }
         format.json { render json: @item.errors, status: :unprocessable_entity }
@@ -74,6 +86,6 @@ class ItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
-      params.require(:item).permit(:name, :price, :des,:image)
+      params.require(:item).permit(:name, :price, :des,:image,:breed,:age,:gender)
     end
 end

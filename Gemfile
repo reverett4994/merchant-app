@@ -52,3 +52,11 @@ gem "paperclip", "~> 5.0.0"
 gem 'aws-sdk', '~> 2'
 
 gem 'owlcarousel-rails'
+
+gem 'time_difference'
+
+gem 'will_paginate', '~> 3.1.0'
+
+gem 'geokit-rails'
+
+gem 'google_distance_matrix'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160921060356) do
+ActiveRecord::Schema.define(version: 20160923063616) do
 
   create_table "comments", force: :cascade do |t|
     t.text     "content",    limit: 65535
@@ -42,6 +42,9 @@ ActiveRecord::Schema.define(version: 20160921060356) do
     t.string   "image_content_type", limit: 255
     t.integer  "image_file_size",    limit: 4
     t.datetime "image_updated_at"
+    t.string   "breed",              limit: 255
+    t.integer  "age",                limit: 4
+    t.string   "gender",             limit: 255
   end
 
   create_table "users", force: :cascade do |t|
@@ -68,6 +71,7 @@ ActiveRecord::Schema.define(version: 20160921060356) do
     t.string   "city",                   limit: 255
     t.integer  "zip",                    limit: 4
     t.string   "full_name",              limit: 255
+    t.string   "state",                  limit: 255
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

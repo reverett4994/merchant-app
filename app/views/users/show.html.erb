@@ -1,0 +1,48 @@
+<h1><%= @user.username %>'s Page </h1>
+
+<h2>Dogs posted by <%=@user.username%></h2>
+<div id='listing_div'
+  <% @user.items.each do |dog| %>
+  <%= link_to '', dog %>
+
+    <%= render ('items/listings'),:dog=>dog %>
+    <br>
+  <% end %>
+</div>
+
+<% if user_signed_in? %>
+  <%= link_to "Send #{@user.username} an email","javascript:;",id:"email_link"%>
+  <div id='email'>
+    <%= form_tag(email_user_path, method: "get") do %>
+      <%= label_tag :message, "Email for #{@user.username}(will include your account name in message)" %>
+      <br>
+      <%= text_area_tag(:message,nil,:placeholder => 'Add Message') %>
+      <%= hidden_field_tag :to_email , @user.email %>
+      <%= hidden_field_tag :to , @user.username %>
+      <%= hidden_field_tag :from , current_user.username %>
+      <%= hidden_field_tag :from_id , current_user.id %>
+      <br>
+      <%= submit_tag("Send") %>
+    <% end %>
+   </div>
+  <%else%>
+    <h2><%= link_to('Login', new_user_session_path)%> to send <%= @user.username %> a message </h2>
+  <%end%>
+
+
+<div id='comments'>
+  <h2>Comments by <%=@user.username%></h2>
+  <% @user.comments.each do |comment| %>
+  <% if comment.item == nil %>
+    <div class='comment'><%= comment.content %>
+    (item was deleted)
+  </div>
+  <%else%>
+  <div class='comment'>
+    <%= comment.content %>
+    <%= link_to 'view page', comment.item %>
+  </div>
+  <%end%>
+    <br>
+  <% end %>
+</div>

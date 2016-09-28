@@ -5,22 +5,24 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-
-  <% if user_signed_in? %>
-  <li>
-    <p>Hello:<%= current_user.username %></p>
-  <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
-  </li>
-<% else %>
-  <li>
-  <%= link_to('Login', new_user_session_path)  %>
-  </li>
-<% end %>
 </head>
 <body>
+  <div id='header'>
+    <%= link_to (image_tag("puppylogo.png",:id=>'logo')),root_path  %>
+    <div id='login'>
+      <% if user_signed_in? %>
+      <div id='username'>Hello:<%= link_to current_user.username, "/users/#{current_user.id}"%></div>
+      <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
+    <% else %>
+      <%= link_to('Login', new_user_session_path)  %>
+    <% end %>
+
+  </div>
+</div>
+
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
-<%= yield %>
+  <%= yield %>
 
 </body>
 </html>

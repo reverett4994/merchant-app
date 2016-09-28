@@ -1,35 +1,76 @@
 <p id="notice"><%= notice %></p>
+<%if false%>
+  <h1>Listing Items</h1>
 
-<h1>Listing Items</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Price</th>
-      <th>Des</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @items.each do |item| %>
+  <table>
+    <thead>
       <tr>
-        <td><%= item.name %></td>
-        <td><%= item.price %></td>
-        <td><%= item.des %></td>
-        <td><%= item.user.username %></td>
-        <td><%= link_to 'Show', item %></td>
-        <% if item.user == current_user%>
-          <td><%= link_to 'Edit', edit_item_path(item) %></td>
-          <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Des</th>
+        <th>User</th>
+        <th>City</th>
+        <th>State</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @items.each do |item| %>
+        <tr>
+          <td><%= item.name %></td>
+          <td><%=number_to_currency(item.price)%></td>
+          <td><%= item.des %></td>
+          <td><%= item.user.username %></td>
+          <td><%= item.user.city %></td>
+          <td><%= item.user.state %></td>
+          <td><%= link_to 'Show', item %></td>
+          <% if item.user == current_user%>
+            <td><%= link_to 'Edit', edit_item_path(item) %></td>
+            <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'New Item', new_item_path %>
+  <br>
+<%end%>
+
+
+
+<h1>Currently Listed Dogs</h1>
+
+
+<div id='page_info'>
+  <div class="apple_pagination">
+      <div class="page_info">
+        <%= page_entries_info @posts %>
+        <div class="dropdown">
+          <button class="dropbtn">Sort By</button>
+          <div class="dropdown-content">
+            <%= link_to 'Newist',root_path%>
+            <%= link_to 'Price High to Low',root_path(sort:'price_asc')%>
+            <%= link_to 'Price Low to High',root_path(sort:'price_desc')%>
+          </div>
+        </div>
+      </div>
+      <%= will_paginate @posts, :container => false %>
+    </div>
+</div>
+
+<div id='listing_div'
+
+  <%= link_to '' %>
+  <% @items.each do |dog| %>
+    <%= render 'listings',:dog=>dog %>
+<%end%>
+</div>
+<div id='page_info'>
+  <div class="apple_pagination">
+      <div class="page_info">
+        <%= page_entries_info @posts %>
+      </div>
+      <%= will_paginate @posts, :container => false %>
+    </div>
+</div>
