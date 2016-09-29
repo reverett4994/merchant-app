@@ -1,6 +1,8 @@
 class ItemsController < ApplicationController
+  require 'json'
   before_action :set_item, only: [:show, :edit, :update, :destroy]
-  WillPaginate.per_page = 3
+  require 'will_paginate/array'
+  WillPaginate.per_page = 300
 
 
   # GET /items
@@ -16,6 +18,18 @@ class ItemsController < ApplicationController
       @items = Item.order('created_at DESC')
     end
 
+
+    if @sort== 'distance'
+      @items = Item.order('created_at DESC')
+       @items.each do |dog|
+         @google=GoogleMapsAPI::DistanceMatrix.calculate([current_user.zip],[dog.user.zip],{:units=>'imperial'})
+         dog.distance= @google.rows[0].elements[0].distance
+      end
+
+     @items=@items.sort{|a,b| a.distance.to_i <=> b.distance.to_i}
+   end
+
+
     @items = @items.paginate(:page => params[:page])
   end
 
@@ -25,6 +39,11 @@ class ItemsController < ApplicationController
     @comment=Comment.new
     @item_album=ItemAlbum.new
     @comments=Comment.where('ITEM_ID LIKE ?',params[:id])
+
+
+
+     @google=GoogleMapsAPI::DistanceMatrix.calculate([current_user.zip],[@item.user.zip],{:units=>'imperial'})
+     @distance_from_user= @google.rows[0].elements[0].distance
   end
 
   # GET /items/new

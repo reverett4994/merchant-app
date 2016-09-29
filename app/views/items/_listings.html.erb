@@ -2,9 +2,12 @@
   <div class='listing'>
     <% if  dog.item_album.first %>
       <%= image_tag dog.item_album.first.image.url,class:'listing_pic'%>
+      <% @google=GoogleMapsAPI::DistanceMatrix.calculate([current_user.zip],[dog.user.zip],{:units=>'imperial'}) %>
+      <% dog.distance= @google.rows[0].elements[0].distance %>
     <%end%>
     <ul>
       <li id='dog_name'class='sliding-middle-out'><%= dog.name%></li>
+      <li><%=dog.distance %></li>
       <li><strong>Breed</strong>: <%=dog.breed%></li>
       <li><strong>Gender</strong>: <%=dog.gender%></li>
       <li><strong>Age(months)</strong>: <%=dog.age%></li>

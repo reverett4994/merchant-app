@@ -91,13 +91,16 @@
   <%= @item.des %>
 </p>
 
-
 <p>
   <strong>Seller</strong>
   <%= link_to @item.user.username, "/users/#{@item.user.id}"%>
 </p>
 <strong>Location</strong>
 <%=@item.user.city%>, <%= @item.user.state%>
+<p>
+  <strong>Distance away from you:</strong>
+  <%= @distance_from_user %>
+</p>
 <br>
 
 </div>
@@ -198,12 +201,4 @@
 
 
 
-<%= matrix = GoogleDistanceMatrix::Matrix.new %>
-<% puppy_place = GoogleDistanceMatrix::Place.new address: "08515" %>
-<% hills = GoogleDistanceMatrix::Place.new address: "90210" %>
-
-
-<% matrix.origins << puppy_place %>
-<% matrix.destinations  << hills %>
-
-<% matrix.configure.google_api_key = "AIzaSyDaatx0-jx22kJdnuCQ4IBcbWvet0z293Y"%>
+<%= @item.distance %>

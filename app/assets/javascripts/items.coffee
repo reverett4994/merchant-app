@@ -3,6 +3,10 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 #USE THIS LINE TO GET PAGE TO LOAD JAVA EVERYTIME
+
+
+
+
 email= ->
   $("#email_link").click ->
 	  $("#email").fadeToggle()
@@ -38,3 +42,4 @@ $(document).on 'turbolinks:load', ->
   email()
   slideshow()
   fullimage()
+  initMap()

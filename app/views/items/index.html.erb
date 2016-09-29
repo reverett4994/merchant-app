@@ -1,45 +1,12 @@
 <p id="notice"><%= notice %></p>
-<%if false%>
-  <h1>Listing Items</h1>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Des</th>
-        <th>User</th>
-        <th>City</th>
-        <th>State</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @items.each do |item| %>
-        <tr>
-          <td><%= item.name %></td>
-          <td><%=number_to_currency(item.price)%></td>
-          <td><%= item.des %></td>
-          <td><%= item.user.username %></td>
-          <td><%= item.user.city %></td>
-          <td><%= item.user.state %></td>
-          <td><%= link_to 'Show', item %></td>
-          <% if item.user == current_user%>
-            <td><%= link_to 'Edit', edit_item_path(item) %></td>
-            <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-  <br>
-<%end%>
 
 
 
 <h1>Currently Listed Dogs</h1>
+
+
+
+
 
 
 <div id='page_info'>
@@ -74,3 +41,8 @@
       <%= will_paginate @posts, :container => false %>
     </div>
 </div>
+
+
+
+
+$$$$$   WORKS BUT PAGINATION STILL BROKEN :( SORTS BY DISTANCE! $$$$$$$$$$$$

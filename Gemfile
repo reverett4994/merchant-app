@@ -60,3 +60,5 @@ gem 'will_paginate', '~> 3.1.0'
 gem 'geokit-rails'
 
 gem 'google_distance_matrix'
+
+gem 'google_maps_api-distance_matrix'
