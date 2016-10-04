@@ -9,6 +9,7 @@
 <body>
   <div id='header'>
     <%= link_to (image_tag("puppylogo.png",:id=>'logo')),root_path  %>
+
     <div id='login'>
       <% if user_signed_in? %>
       <div id='username'>Hello:<%= link_to current_user.username, "/users/#{current_user.id}"%></div>
@@ -16,8 +17,10 @@
     <% else %>
       <%= link_to('Login', new_user_session_path)  %>
     <% end %>
-
   </div>
+  <%= form_tag(root_path, method: "get") do %>
+    <%= text_field_tag(:search,nil,:placeholder => 'Search for a breed!') %>
+  <% end %>
 </div>
 
   <p class="notice"><%= notice %></p>

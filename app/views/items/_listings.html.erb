@@ -1,13 +1,32 @@
 <%= link_to dog do %>
+<% if user_signed_in? %>
+  <% @google=GoogleMapsAPI::DistanceMatrix.calculate([current_user.zip],[dog.zip],{:units=>'imperial'}) %>
+  <%@location= @google.destination_addresses%>
+  <%@location=@location[0].gsub(/['""']/,'')%>
+  <%@location=@location.gsub(/[USA]$/,'')%>
+  <%@location=@location.gsub(/[USA]$/,'')%>
+  <%@location=@location.gsub(/[USA]$/,'')%>
+  <%@location=@location.chop%>
+  <%@location=@location.chop%>
+  <% dog.distance= @google.rows[0].elements[0].distance %>
+<%else%>
+  <% @google=GoogleMapsAPI::DistanceMatrix.calculate(['08515'],[dog.zip],{:units=>'imperial'}) %>
+  <%@location= @google.destination_addresses%>
+  <%@location=@location[0].gsub(/['""']/,'')%>
+  <%@location=@location.gsub(/[USA]$/,'')%>
+  <%@location=@location.gsub(/[USA]$/,'')%>
+  <%@location=@location.gsub(/[USA]$/,'')%>
+  <%@location=@location.chop%>
+  <%@location=@location.chop%>
+  <% dog.distance='Login to see' %>
+<%end%>
   <div class='listing'>
     <% if  dog.item_album.first %>
       <%= image_tag dog.item_album.first.image.url,class:'listing_pic'%>
-      <% @google=GoogleMapsAPI::DistanceMatrix.calculate([current_user.zip],[dog.user.zip],{:units=>'imperial'}) %>
-      <% dog.distance= @google.rows[0].elements[0].distance %>
     <%end%>
     <ul>
       <li id='dog_name'class='sliding-middle-out'><%= dog.name%></li>
-      <li><%=dog.distance %></li>
+
       <li><strong>Breed</strong>: <%=dog.breed%></li>
       <li><strong>Gender</strong>: <%=dog.gender%></li>
       <li><strong>Age(months)</strong>: <%=dog.age%></li>
@@ -44,8 +63,9 @@
     </ul>
     <ul class='location'>
       <li id='dog_name'class='sliding-middle-out'>Location</li>
-      <li><strong>City</strong>: <%=dog.user.city%></li>
-      <li><strong>State</strong>: <%=dog.user.state%></li>
+
+      <li><strong>City/State</strong>: <%=@location%></li>
+      <li><strong>Distance</strong>: <%=dog.distance%></li>
     </ul>
   </div>
 <%end%>

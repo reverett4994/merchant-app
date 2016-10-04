@@ -1,0 +1,37 @@
+<%= link_to 'Edit Info', edit_item_path %> <br>
+<%= link_to 'Show Listing', @item %>
+
+<h2>Add/Remove Images for <%= @item.name %> Here!</h2>
+
+<%= form_for(@item_album) do |f| %>
+  <% if @item_album.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@item_album.errors.count, "error") %> prohibited this item_album from being saved:</h2>
+      <ul>
+      <% @item_album.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= hidden_field_tag(:item, params[:id]) %>
+  <%= f.file_field :image %>
+  <div class="actions">
+    <%= f.submit "Add Image" %>
+  </div>
+<% end %>
+</div>
+<h2>Remove any current pictures</h2>
+<%@item.item_album.each do |f| %>
+  <table>
+   <tr>
+     <th><%= image_tag f.image.url,class:'edit_pic' %></th>
+   </tr>
+   <tr>
+     <th><%= link_to 'Remove Picture', f, method: :delete, data: { confirm: 'Are you sure?' } %></th>
+   </tr>
+ </table>
+
+
+ <%= link_to 'Show Listing', @item %>
+<% end %>

@@ -12,7 +12,7 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name,'Title' %><br>
+    <%= f.label :name,'Name' %><br>
     <%= f.text_field :name %>
   </div>
   <div class="field">
@@ -32,9 +32,18 @@
     <%= f.text_field :price %>
   </div>
   <div class="field">
+    <%= f.label :price,'Check if its a Adoption (price will be 0)' %><br>
+    <%= f.check_box :price,{},0,false %>
+  </div>
+  <div class="field">
     <%= f.label :des,'Description' %><br>
     <%= f.text_area :des %>
   </div>
+  <div class="field">
+    <%= f.label :zip,"Zip Code of Dogs Location" %><br>
+    <%= f.text_field :zip,:value => current_user.zip %>
+  </div>
+  <%= f.hidden_field :id, :value => params[:id] %>
 <h3>Add images on edit page</h3>
   <div class="actions">
     <%= f.submit 'List Item' %>

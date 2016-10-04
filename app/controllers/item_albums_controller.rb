@@ -28,7 +28,7 @@ class ItemAlbumsController < ApplicationController
     @item_album.item_id=params[:item]
     respond_to do |format|
       if @item_album.save
-        format.html { redirect_to item_path(params[:item]), notice: 'Item album was successfully created.' }
+        format.html { redirect_to(:back)  }
         format.json { render :show, status: :created, location: @item_album }
       else
         format.html { render :new }
@@ -56,7 +56,7 @@ class ItemAlbumsController < ApplicationController
   def destroy
     @item_album.destroy
     respond_to do |format|
-      format.html { redirect_to item_albums_url, notice: 'Item album was successfully destroyed.' }
+      format.html { redirect_to(:back)  }
       format.json { head :no_content }
     end
   end

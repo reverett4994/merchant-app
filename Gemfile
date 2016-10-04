@@ -62,3 +62,5 @@ gem 'geokit-rails'
 gem 'google_distance_matrix'
 
 gem 'google_maps_api-distance_matrix'
+
+gem 'validates_zipcode'

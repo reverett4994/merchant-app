@@ -95,17 +95,19 @@
   <strong>Seller</strong>
   <%= link_to @item.user.username, "/users/#{@item.user.id}"%>
 </p>
-<strong>Location</strong>
-<%=@item.user.city%>, <%= @item.user.state%>
-<p>
-  <strong>Distance away from you:</strong>
-  <%= @distance_from_user %>
-</p>
+<strong>Location:</strong>
+<%=@location%>
+<% if user_signed_in? %>
+  <p>
+    <strong>Distance away from you:</strong>
+    <%= @distance_from_user %>
+  </p>
+<%end%>
 <br>
 
 </div>
 
-
+<br><%= link_to "Intrested in taking home #{@item.name}? Contact the Seller!!",root_path %>
 
 
 

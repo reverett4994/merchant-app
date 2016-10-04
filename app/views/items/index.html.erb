@@ -1,8 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 
+<% if @search %>
+  <h1>Currently Listed <%=@search%> Dogs</h1>
+<% else %>
+  <h1>Currently Listed Dogs</h1>
 
-<h1>Currently Listed Dogs</h1>
+<%end%>
 
 
 
@@ -16,9 +20,16 @@
         <div class="dropdown">
           <button class="dropbtn">Sort By</button>
           <div class="dropdown-content">
-            <%= link_to 'Newist',root_path%>
-            <%= link_to 'Price High to Low',root_path(sort:'price_asc')%>
-            <%= link_to 'Price Low to High',root_path(sort:'price_desc')%>
+            <%= link_to 'Newist',root_path(search:@search), class: (params[:sort] == nil ? 'active' : '')%>
+            <%= link_to 'Price Low to High',root_path(sort:'price_desc',search:@search), class: (params[:sort] == 'price_desc' ? 'active' : '')%>
+            <%= link_to 'Price High to Low',root_path(sort:'price_asc',search:@search), class: (params[:sort] == 'price_asc' ? 'active' : '')%>
+            <%= link_to 'Age yougest',root_path(sort:'age_desc',search:@search), class: (params[:sort] == 'age_desc' ? 'active' : '')%>
+            <%= link_to 'Age oldest',root_path(sort:'age_asc',search:@search), class: (params[:sort] == 'age_asc' ? 'active' : '')%>
+
+            <% if user_signed_in? %>
+              <%= link_to 'Distance',root_path(sort:'distance',search:@search), class: (params[:sort] == 'distance' ? 'active' : '')%>
+            <%end%>
+
           </div>
         </div>
       </div>
@@ -41,8 +52,3 @@
       <%= will_paginate @posts, :container => false %>
     </div>
 </div>
-
-
-
-
-$$$$$   WORKS BUT PAGINATION STILL BROKEN :( SORTS BY DISTANCE! $$$$$$$$$$$$
