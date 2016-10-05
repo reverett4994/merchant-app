@@ -10,6 +10,28 @@
 email= ->
   $("#email_link").click ->
 	  $("#email").fadeToggle()
+  $("#email_link").click ->    
+	  $('html, body').animate({
+      scrollTop: $("#email").offset().top
+    }, 1000);
+  $("#comments_by").click ->
+    $("#comments").fadeToggle()
+  $("#comments_by").click ->
+	  $('html, body').animate({
+      scrollTop: $("#comments").offset().top
+    }, 1000);
+  $("#recent_comments_nav").click ->
+    $("#recent_comments").fadeToggle()
+  $("#recent_comments_nav").click ->
+	  $('html, body').animate({
+      scrollTop: $("#recent_comments").offset().top
+    }, 1000);
+  $("#current_offers").click ->
+    $("#offers").fadeToggle()
+  $("#current_offers").click ->
+	  $('html, body').animate({
+      scrollTop: $("#offers").offset().top
+    }, 1000);
 slideshow= ->
   $(".small_image img").click ->
     source=$(this).attr("src")

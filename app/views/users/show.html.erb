@@ -1,9 +1,29 @@
 <h1><%= @user.username %>'s Page </h1>
+
+
+<% if current_user == @user %>
+  <ul class="show_nav" id="my_show_nav">
+     <li><%= link_to "Comments by #{@user.username}","javascript:;",id:"comments_by"%></li>
+     <li><%= link_to 'Recent Comments on your Dogs',"javascript:;",id:"recent_comments_nav"%></li>
+     <li><%= link_to "Email #{@user.username}","javascript:;",id:"email_link"%></li>
+     <li><%= link_to 'Current Offers',"javascript:;",id:'current_offers'%></li>
+  </ul>
+<%else%>
+  <ul class="show_nav_center" id="my_show_nav">
+     <li><%= link_to "Comments by #{@user.username}","javascript:;",id:"comments_by"%></li>
+     <li><%= link_to "Email #{@user.username}","javascript:;",id:'email_link'%></li>
+  </ul>
+<%end%>
+
+
+
 <% if current_user == @user %>
   <%= link_to 'New Listing', new_item_path %> <br>
   <%= link_to 'Edit Account',edit_user_registration_path%>
 <%end%>
-<h2>Dogs posted by <%=@user.username%></h2>
+
+
+<h1>Dogs posted by <%=@user.username%></h1>
 <div id='listing_div'
   <% @user.items.each do |dog| %>
   <%= link_to '', dog %>
@@ -13,90 +33,134 @@
   <% end %>
 </div>
 
-
-
-<% if current_user == @user %>
-<div id='comments'>
-  <h2>All comments on your dogs in the last 24 hours</h2>
-  <% @comments.each do |comment| %>
-  <% if comment.item == nil %>
-    <div class='comment'><%= comment.content %>
-    (item was deleted)
-  </div>
-  <%else%>
-  <div class='comment'>
-    <%= comment.content %>
-    <%= link_to 'view page', comment.item %>
-  </div>
-  <div class='comment_time'>
-    <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_general %>
-
-    <% if TimeDifference.between(comment.created_at,  Time.current).in_seconds<60 %>
-        <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_seconds %>
-        Created About <%=time_diffrence_comment.to_i%> seconds ago
-
-    <% elsif TimeDifference.between(comment.created_at,  Time.current).in_minutes<60 %>
-        <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_minutes %>
-         Created About <%=time_diffrence_comment.to_i%> minutes ago
-
-    <% elsif TimeDifference.between(comment.created_at,  Time.current).in_hours<24 %>
-        <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_hours %>
-         Created About <%=time_diffrence_comment.to_i%> hours ago
-
-    <% elsif TimeDifference.between(comment.created_at,  Time.current).in_days<30 %>
-        <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_days %>
-         Created About <%=time_diffrence_comment.to_i%> days ago
-
-    <% elsif TimeDifference.between(comment.created_at,  Time.current).in_months<12 %>
-        <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_months %>
-         Created About <%=time_diffrence_comment.to_i%> months ago
-
-    <% elsif TimeDifference.between(comment.created_at,  Time.current).in_months<12 %>
-        <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_years%>
-         Created About <%=time_diffrence_comment.to_i%> years ago
+<div id="user_show_wrapper">
+  <% if user_signed_in? %>
+    <div id='email'>
+      <%= form_tag(email_user_path, method: "get") do %>
+        <h2><%= label_tag :message, "Email for #{@user.username} (will include your account name in message)" %></h2>
+        <br>
+        <%= text_area_tag(:message,nil,:placeholder => 'Add Message') %>
+        <%= hidden_field_tag :to_email , @user.email %>
+        <%= hidden_field_tag :to , @user.username %>
+        <%= hidden_field_tag :from , current_user.username %>
+        <%= hidden_field_tag :from_id , current_user.id %>
+        <br>
+        <%= submit_tag("Send") %>
+      <% end %>
+     </div>
+    <%else%>
+      <h2><%= link_to('Login', new_user_session_path)%> to send <%= @user.username %> a message </h2>
     <%end%>
-  </div>
-  <%end%>
-    <br>
-  <% end %>
-</div>
 
 
-<%end%>
 
-<div id='comments'>
-  <h2>Comments by <%=@user.username%></h2>
-  <% @user.comments.each do |comment| %>
-  <% if comment.item == nil %>
-    <div class='comment'><%= comment.content %>
-    (item was deleted)
-  </div>
-  <%else%>
-  <div class='comment'>
-    <%= comment.content %>
-    <%= link_to 'view page', comment.item %>
-  </div>
-  <%end%>
-    <br>
-  <% end %>
-</div>
+  <% if current_user == @user %>
+  <div id='recent_comments'>
+    <h2>All comments on your dogs in the last 24 hours</h2>
+    <% @comments.each do |comment| %>
+    <% if comment.item == nil %>
+      <div class='comment'><%= comment.content %>
+      (item was deleted)
+    </div>
+    <%else%>
+    <div class='comment'>
+      <%= comment.content %>
+      <%= link_to 'view page', comment.item %>
+    </div>
+    <div class='comment_time'>
+      <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_general %>
 
+      <% if TimeDifference.between(comment.created_at,  Time.current).in_seconds<60 %>
+          <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_seconds %>
+          Created About <%=time_diffrence_comment.to_i%> seconds ago
 
-<% if user_signed_in? %>
-  <%= link_to "Send #{@user.username} an email","javascript:;",id:"email_link"%>
-  <div id='email'>
-    <%= form_tag(email_user_path, method: "get") do %>
-      <%= label_tag :message, "Email for #{@user.username}(will include your account name in message)" %>
+      <% elsif TimeDifference.between(comment.created_at,  Time.current).in_minutes<60 %>
+          <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_minutes %>
+           Created About <%=time_diffrence_comment.to_i%> minutes ago
+
+      <% elsif TimeDifference.between(comment.created_at,  Time.current).in_hours<24 %>
+          <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_hours %>
+           Created About <%=time_diffrence_comment.to_i%> hours ago
+
+      <% elsif TimeDifference.between(comment.created_at,  Time.current).in_days<30 %>
+          <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_days %>
+           Created About <%=time_diffrence_comment.to_i%> days ago
+
+      <% elsif TimeDifference.between(comment.created_at,  Time.current).in_months<12 %>
+          <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_months %>
+           Created About <%=time_diffrence_comment.to_i%> months ago
+
+      <% elsif TimeDifference.between(comment.created_at,  Time.current).in_months<12 %>
+          <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_years%>
+           Created About <%=time_diffrence_comment.to_i%> years ago
+      <%end%>
+    </div>
+    <%end%>
       <br>
-      <%= text_area_tag(:message,nil,:placeholder => 'Add Message') %>
-      <%= hidden_field_tag :to_email , @user.email %>
-      <%= hidden_field_tag :to , @user.username %>
-      <%= hidden_field_tag :from , current_user.username %>
-      <%= hidden_field_tag :from_id , current_user.id %>
-      <br>
-      <%= submit_tag("Send") %>
     <% end %>
-   </div>
-  <%else%>
-    <h2><%= link_to('Login', new_user_session_path)%> to send <%= @user.username %> a message </h2>
+  </div>
+
+
   <%end%>
+
+  <div id="comments">
+    <h2>Comments by <%=@user.username%></h2>
+    <% @user.comments.each do |comment| %>
+    <% if comment.item == nil %>
+      <div class='comment'><%= comment.content %>
+      (item was deleted)
+    </div>
+    <%else%>
+    <div class='comment'>
+      <%= comment.content %>
+      <%= link_to 'view page', comment.item %>
+      <div class='comment_time'>
+        <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_general %>
+
+        <% if TimeDifference.between(comment.created_at,  Time.current).in_seconds<60 %>
+            <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_seconds %>
+            Created About <%=time_diffrence_comment.to_i%> seconds ago
+
+        <% elsif TimeDifference.between(comment.created_at,  Time.current).in_minutes<60 %>
+            <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_minutes %>
+             Created About <%=time_diffrence_comment.to_i%> minutes ago
+
+        <% elsif TimeDifference.between(comment.created_at,  Time.current).in_hours<24 %>
+            <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_hours %>
+             Created About <%=time_diffrence_comment.to_i%> hours ago
+
+        <% elsif TimeDifference.between(comment.created_at,  Time.current).in_days<30 %>
+            <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_days %>
+             Created About <%=time_diffrence_comment.to_i%> days ago
+
+        <% elsif TimeDifference.between(comment.created_at,  Time.current).in_months<12 %>
+            <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_months %>
+             Created About <%=time_diffrence_comment.to_i%> months ago
+
+        <% elsif TimeDifference.between(comment.created_at,  Time.current).in_months<12 %>
+            <% time_diffrence_comment=TimeDifference.between(comment.created_at, Time.current).in_years%>
+             Created About <%=time_diffrence_comment.to_i%> years ago
+        <%end%>
+      </div>
+    </div>
+    <%end%>
+      <br>
+    <% end %>
+  </div>
+  <div id="offers">
+  <% if current_user == @user %>
+    <h2>All Current Offers</h2>
+    <%@user.items.each do |dog| %>
+      <%dog.offers.each do |offer|%>
+        <%=offer.message%>
+        For
+        <%=offer.item.name%>
+        From
+        <%=offer.user.username%>
+        <br>
+      <%end%>
+    <%end%>
+  <%end%>
+  </div>
+  <br>
+</div>

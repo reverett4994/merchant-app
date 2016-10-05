@@ -18,7 +18,8 @@
 
 body{
   color: #344b4b;
-  background-color: #f2f2f2
+  background-color: #f2f2f2;
+
 }
 #body_div{
   width: 66%;
@@ -52,6 +53,9 @@ body h1{
 
 .active{
   background-color: #b3b3b3;
+}
+.field_hidden{
+  display: none;
 }
 
 
@@ -215,9 +219,10 @@ body h1{
 }
 
 #comments{
-  margin-top: 150px;
+  margin-top: 70px;
   display: block;
   clear: both;
+
 }
 
 .comment{
@@ -256,6 +261,52 @@ body h1{
    -webkit-transition-duration: 0.4s; /* Safari */
    transition-duration: 0.4s;
  }
+
+
+
+ .button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #81BABA;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  margin-top: 20px;
+}
+.button:hover{
+  background-color: #344b4b;;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
 
 
 /********************************************SHOW DOGE******************************************/
@@ -435,18 +486,42 @@ text-align: center;
 
 
 /********************************************USER PAGE******************************************/
-#email_link{
-  font-size: 24px;
-  font-weight: bold;
-}
+
 #email{
   display: none;
 }
+#recent_comments{
+  display: none;
+}
+#user_show_wrapper #comments{
+  display: none;
+}
+#offers{
+  display: none;
+}
+#user_show_wrapper{
+  width: 66%;
+  margin-left: auto;
+  margin-right: auto;
+}
+#user_show_wrapper h2{
+  text-align: center;
+}
+#user_show_wrapper textarea{
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #email textarea{
-  width: 472px;
+  width: 100%;
+  resize: none;
   height: 111px;
 }
 #email input{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   width: 125px;
   height: 40px;
   border: none;
@@ -464,4 +539,124 @@ transition-duration: 0.4s;
 
 
 
+ /* Remove margins and padding from the list, and add a black background color */
+ul.show_nav {
+   list-style-type: none;
+   margin: 0;
+   padding: 0;
+   overflow: hidden;
+   background-color: #344b4b;
+    text-align: center;
+
+}
+
+/* Float the list items side by side */
+ul.show_nav li {
+ display: inline-block;
+ width: 25%;
+ float: left;
+}
+
+/* Style the links inside the list items */
+ul.show_nav li a {
+   display: inline-block;
+   color: #f2f2f2;
+   text-align: center;
+   padding: 14px 40px;
+   text-decoration: none;
+   transition: 0.3s;
+   font-size: 17px;
+
+}
+
+/* Change background color of links on hover */
+ul.show_nav li a:hover {background-color: #81BABA;}
+
+/* Hide the list item that contains the link that should open and close the topnav on small screens */
+ul.show_nav li.icon {display: none;}
+
+
+
+
+
+
+
+
+/* Remove margins and padding from the list, and add a black background color */
+ul.show_nav_center {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+   text-align: center;
+
+}
+
+/* Float the list items side by side */
+ul.show_nav_center li {
+display: inline-block;
+width: 25%;
+}
+
+/* Style the links inside the list items */
+ul.show_nav_center li a {
+  display: inline-block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 40px;
+  text-decoration: none;
+  transition: 0.3s;
+  font-size: 17px;
+
+}
+
+/* Change background color of links on hover */
+ul.show_nav_center li a:hover {background-color: #555;}
+
+/* Hide the list item that contains the link that should open and close the topnav on small screens */
+ul.show_nav_center li.icon {display: none;}
+
+
+
+
+
  /********************************************USER PAGE******************************************/
+
+
+
+
+
+
+ /********************************************NEW OFFER******************************************/
+
+.new_offer{
+  text-align: center;
+}
+.new_offer textarea{
+  width: 50%;
+  min-width: 40%;
+  max-width: 90%;
+  height: 20em;
+  border: .5px solid black;
+
+  outline: none
+}
+.offer_button {
+ display: inline-block;
+ border-radius: 4px;
+ background-color: #81BABA;
+ border: none;
+ color: #FFFFFF;
+ text-align: center;
+ font-size: 21px;
+ padding: 15px;
+
+ transition: all 0.5s;
+ cursor: pointer;
+ margin: 5px;
+ margin-top: 20px;
+}
+.offer_button:hover{
+ background-color: #344b4b;;
+}

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :offers
   resources :item_albums
   resources :comments
   resources :reviews

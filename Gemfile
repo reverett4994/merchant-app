@@ -64,3 +64,5 @@ gem 'google_distance_matrix'
 gem 'google_maps_api-distance_matrix'
 
 gem 'validates_zipcode'
+#FOR STATIC PAGEs
+gem 'high_voltage', '~> 3.0.0'

@@ -14,4 +14,15 @@ class UserMailer < ApplicationMailer
     @message=message
     mail(to:to_email,subject:'Email from a user')
   end
+
+
+
+  def offer(item,to,to_username,from_username,offer)
+    @item=item
+    @to=to
+    @to_username=to_username
+    @from_username=from_username
+    @offer=offer
+    mail(to:to,subject:'Offer from a user')
+  end
 end

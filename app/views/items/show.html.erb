@@ -106,9 +106,15 @@
 <br>
 
 </div>
+<% if user_signed_in? %>
 
-<br><%= link_to "Intrested in taking home #{@item.name}? Contact the Seller!!",root_path %>
+<%= button_to new_offer_path(:item=>params[:id]), :class => 'button',method: :get do %>
+    <span id="span">"Intrested in taking home <%=@item.name%>? Contact the Seller!!"</span>
+<% end %>
 
+<% else %>
+  <br>Sign in to contact owner about bring <%=@item.name%> home!!
+<%end%>
 
 
 
