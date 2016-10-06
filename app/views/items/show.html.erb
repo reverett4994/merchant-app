@@ -108,7 +108,7 @@
 </div>
 <% if user_signed_in? %>
 
-<%= link_to new_offer_path(:item=>params[:id]), :class => 'button' do %>
+<%= link_to new_message_path(:recipient=>@item.user.id), :class => 'button' do %>
     <span id="span">"Intrested in taking home <%=@item.name%>? Contact the Seller!!"</span>
 <% end %>
 <% else %>
@@ -204,8 +204,3 @@
   <% end %>
 </div>
 </div>
-
-
-
-
-<%= @item.distance %>

@@ -1,0 +1,17 @@
+<div id='offer_page'>
+  <p id="notice"><%= notice %></p>
+
+  <h1>This message was sent from <%=@message.sender.username%></h1>
+
+  <div id='offer_message'>
+    <%= @message.message %>
+  </div>
+
+  <h2>This message was sent to <%=@message.recipient.username%></h2>
+  <h3>It was sent on <%=@message.created_at.to_formatted_s(:long_ordinal) %></h3>
+<% if current_user == @message.recipient %>
+  <%= link_to new_message_path(:recipient=>@message.sender.id), :class => 'button' do %>
+      <span id="span">"To reply click here!!!"</span>
+  <% end %>
+<%end%>
+</div>

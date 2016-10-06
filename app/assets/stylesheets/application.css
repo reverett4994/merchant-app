@@ -589,7 +589,7 @@ ul.show_nav_center {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #333;
+  background-color: #344b4b;
    text-align: center;
 
 }
@@ -613,7 +613,7 @@ ul.show_nav_center li a {
 }
 
 /* Change background color of links on hover */
-ul.show_nav_center li a:hover {background-color: #555;}
+ul.show_nav_center li a:hover {background-color: #81BABA;}
 
 /* Hide the list item that contains the link that should open and close the topnav on small screens */
 ul.show_nav_center li.icon {display: none;}
@@ -635,11 +635,12 @@ ul.show_nav_center li.icon {display: none;}
   text-align: center;
 }
 .new_offer textarea{
-  width: 50%;
+  width: 60%;
   min-width: 40%;
   max-width: 90%;
   height: 20em;
   border: .5px solid black;
+  font-size: 23px;
 
   outline: none
 }
@@ -671,7 +672,7 @@ ul.show_nav_center li.icon {display: none;}
 
 #offer_page{
   text-align: center;
-  width: 50%;
+  width: 70%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -689,6 +690,7 @@ ul.show_nav_center li.icon {display: none;}
   text-align: left;
   margin-left: auto;
   margin-right: auto;
+
 }
 
 #email_show textarea{

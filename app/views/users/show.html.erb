@@ -5,13 +5,14 @@
   <ul class="show_nav" id="my_show_nav">
      <li><%= link_to "Comments by #{@user.username}","javascript:;",id:"comments_by"%></li>
      <li><%= link_to 'Recent Comments on your Dogs',"javascript:;",id:"recent_comments_nav"%></li>
-     <li><%= link_to "Email #{@user.username}","javascript:;",id:"email_link"%></li>
-     <li><%= link_to 'Current Offers',"javascript:;",id:'current_offers'%></li>
+     <li><%= link_to "Message #{@user.username}",new_message_path(:recipient=>@user.id)%></li>
+
+     <li><%= link_to 'Current Messages',"javascript:;",id:'current_offers'%></li>
   </ul>
 <%else%>
   <ul class="show_nav_center" id="my_show_nav">
      <li><%= link_to "Comments by #{@user.username}","javascript:;",id:"comments_by"%></li>
-     <li><%= link_to "Email #{@user.username}","javascript:;",id:'email_link'%></li>
+     <li><%= link_to "Message #{@user.username}",new_message_path(:recipient=>@user.id)%></li>
   </ul>
 <%end%>
 
@@ -34,29 +35,7 @@
 </div>
 
 <div id="user_show_wrapper">
-  <% if user_signed_in? %>
 
-  <%= link_to new_offer_path(:item=>params[:id]), :class => 'button' do %>
-      <span id="span">"Want to send <%=@user.username%> a message? Click Here!"</span>
-  <% end %>
-
-
-    <div id='email'>
-      <%= form_tag(email_user_path, method: "get") do %>
-        <h2><%= label_tag :message, "Email for #{@user.username} (will include your account name in message)" %></h2>
-        <br>
-        <%= text_area_tag(:message,nil,:placeholder => 'Add Message') %>
-        <%= hidden_field_tag :to_email , @user.email %>
-        <%= hidden_field_tag :to , @user.username %>
-        <%= hidden_field_tag :from , current_user.username %>
-        <%= hidden_field_tag :from_id , current_user.id %>
-        <br>
-        <%= submit_tag("Send") %>
-      <% end %>
-     </div>
-    <%else%>
-      <h2><%= link_to('Login', new_user_session_path)%> to send <%= @user.username %> a message </h2>
-    <%end%>
 
 
 
@@ -155,27 +134,77 @@
   </div>
   <div id="offers">
   <% if current_user == @user %>
-    <h2>All Current Offers</h2>
 
-    <%@user.items.each do |dog| %>
-      <%dog.offers.each do |offer|%>
-        <%=offer.message%>
-        For
-        <%=offer.item.name%>
-        From
-        <%=offer.user.username%>
-        <%= link_to 'Show', offer %>
+    <h2>All Received Messages</h2>
+
+    <%@user.received_messages.each do |message| %>
+        <%=message.message%>
+        <div class='comment_time'>
+          <% time_diffrence_message=TimeDifference.between(message.created_at, Time.current).in_general %>
+
+          <% if TimeDifference.between(message.created_at,  Time.current).in_seconds<60 %>
+              <% time_diffrence_message=TimeDifference.between(message.created_at, Time.current).in_seconds %>
+              Sent About <%=time_diffrence_message.to_i%> seconds ago
+
+          <% elsif TimeDifference.between(message.created_at,  Time.current).in_minutes<60 %>
+              <% time_diffrence_message=TimeDifference.between(message.created_at, Time.current).in_minutes %>
+               Sent About <%=time_diffrence_message.to_i%> minutes ago
+
+          <% elsif TimeDifference.between(message.created_at,  Time.current).in_hours<24 %>
+              <% time_diffrence_message=TimeDifference.between(message.created_at, Time.current).in_hours %>
+               Sent About <%=time_diffrence_message.to_i%> hours ago
+
+          <% elsif TimeDifference.between(message.created_at,  Time.current).in_days<30 %>
+              <% time_diffrence_message=TimeDifference.between(message.created_at, Time.current).in_days %>
+               Sent About <%=time_diffrence_message.to_i%> days ago
+
+          <% elsif TimeDifference.between(message.created_at,  Time.current).in_months<12 %>
+              <% time_diffrence_message=TimeDifference.between(message.created_at, Time.current).in_months %>
+               Sent About <%=time_diffrence_message.to_i%> months ago
+
+          <% elsif TimeDifference.between(message.created_at,  Time.current).in_months<12 %>
+              <% time_diffrence_message=TimeDifference.between(message.created_at, Time.current).in_years%>
+               Sent About <%=time_diffrence_message.to_i%> years ago
+          <%end%>
+        </div>
+        <%= link_to 'Show', message %>
         <br>
-      <%end%>
     <%end%>
 
-    <h2>Sent Messages</h2>
-      <%@user.offers.each do |offer|%>
-        <%=offer.message%>
-        <%= link_to 'Show', offer %>
+    <h2>All Sent Messages</h2>
+    <%@user.sent_messages.each do |message| %>
+        <%=message.message%>
+        <div class='comment_time'>
+          <% time_diffrence_message=TimeDifference.between(message.created_at, Time.current).in_general %>
 
+          <% if TimeDifference.between(message.created_at,  Time.current).in_seconds<60 %>
+              <% time_diffrence_message=TimeDifference.between(message.created_at, Time.current).in_seconds %>
+              Sent About <%=time_diffrence_message.to_i%> seconds ago
+
+          <% elsif TimeDifference.between(message.created_at,  Time.current).in_minutes<60 %>
+              <% time_diffrence_message=TimeDifference.between(message.created_at, Time.current).in_minutes %>
+               Sent About <%=time_diffrence_message.to_i%> minutes ago
+
+          <% elsif TimeDifference.between(message.created_at,  Time.current).in_hours<24 %>
+              <% time_diffrence_message=TimeDifference.between(message.created_at, Time.current).in_hours %>
+               Sent About <%=time_diffrence_message.to_i%> hours ago
+
+          <% elsif TimeDifference.between(message.created_at,  Time.current).in_days<30 %>
+              <% time_diffrence_message=TimeDifference.between(message.created_at, Time.current).in_days %>
+               Sent About <%=time_diffrence_message.to_i%> days ago
+
+          <% elsif TimeDifference.between(message.created_at,  Time.current).in_months<12 %>
+              <% time_diffrence_message=TimeDifference.between(message.created_at, Time.current).in_months %>
+               Sent About <%=time_diffrence_message.to_i%> months ago
+
+          <% elsif TimeDifference.between(message.created_at,  Time.current).in_months<12 %>
+              <% time_diffrence_message=TimeDifference.between(message.created_at, Time.current).in_years%>
+               Sent About <%=time_diffrence_message.to_i%> years ago
+          <%end%>
+        </div>
+        <%= link_to 'Show', message %>
         <br>
-      <%end%>
+    <%end%>
   <%end%>
   </div>
   <br>

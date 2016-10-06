@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :messages
   resources :offers
   resources :item_albums
   resources :comments
