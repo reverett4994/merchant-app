@@ -35,6 +35,12 @@
 
 <div id="user_show_wrapper">
   <% if user_signed_in? %>
+
+  <%= link_to new_offer_path(:item=>params[:id]), :class => 'button' do %>
+      <span id="span">"Want to send <%=@user.username%> a message? Click Here!"</span>
+  <% end %>
+
+
     <div id='email'>
       <%= form_tag(email_user_path, method: "get") do %>
         <h2><%= label_tag :message, "Email for #{@user.username} (will include your account name in message)" %></h2>
@@ -150,6 +156,7 @@
   <div id="offers">
   <% if current_user == @user %>
     <h2>All Current Offers</h2>
+
     <%@user.items.each do |dog| %>
       <%dog.offers.each do |offer|%>
         <%=offer.message%>
@@ -157,9 +164,18 @@
         <%=offer.item.name%>
         From
         <%=offer.user.username%>
+        <%= link_to 'Show', offer %>
         <br>
       <%end%>
     <%end%>
+
+    <h2>Sent Messages</h2>
+      <%@user.offers.each do |offer|%>
+        <%=offer.message%>
+        <%= link_to 'Show', offer %>
+
+        <br>
+      <%end%>
   <%end%>
   </div>
   <br>

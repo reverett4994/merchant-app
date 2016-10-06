@@ -284,6 +284,7 @@ body h1{
 }
 
 .button span {
+  color: white;
   cursor: pointer;
   display: inline-block;
   position: relative;
@@ -660,3 +661,56 @@ ul.show_nav_center li.icon {display: none;}
 .offer_button:hover{
  background-color: #344b4b;;
 }
+
+
+
+/********************************************NEW OFFER******************************************/
+
+/********************************************OFFER PAGE******************************************/
+
+
+#offer_page{
+  text-align: center;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#offer_message{
+  text-align: left;
+  font-size: 25px;
+  background: white;
+  margin: 20px;
+  padding: 20px;
+}
+
+
+#offer_message textarea{
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#email_show textarea{
+  width: 100%;
+  resize: none;
+  height: 111px;
+}
+#email_show input{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 125px;
+  height: 40px;
+  border: none;
+  border-radius: 9px;
+  background-color: #81BABA;
+  -webkit-transition-duration: 0.4s; /* Safari */
+transition-duration: 0.4s;
+ }
+
+ #email_show input:hover {
+   background-color: #519494;
+   -webkit-transition-duration: 0.4s; /* Safari */
+   transition-duration: 0.4s;
+ }

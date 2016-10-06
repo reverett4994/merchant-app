@@ -1,19 +1,31 @@
-<p id="notice"><%= notice %></p>
+<div id='offer_page'>
+  <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Item:</strong>
-  <%= @offer.item_id %>
-</p>
+  <h1>This offer was sent from <%=@offer.user.username%></h1>
+  <h2>It was to inquirer about <%=@offer.item.name%></h2>
 
-<p>
-  <strong>User:</strong>
-  <%= @offer.user_id %>
-</p>
+  <div id='offer_message'>
+    <%= @offer.message %>
+  </div>
 
-<p>
-  <strong>Message:</strong>
-  <%= @offer.message %>
-</p>
 
-<%= link_to 'Edit', edit_offer_path(@offer) %> |
-<%= link_to 'Back', offers_path %>
+
+  <% if user_signed_in? %>
+    <div id='email_show'>
+      <%= form_tag(email_user_path, method: "get") do %>
+        <h2><%= label_tag :message, "Reply to this message here by Emailing #{@offer.user.username}" %></h2>
+        <br>
+        <%= text_area_tag(:message,nil,:placeholder => 'Add Message') %>
+        <%= hidden_field_tag :to_email , @offer.user.email %>
+        <%= hidden_field_tag :to , @offer.user.username %>
+        <%= hidden_field_tag :from , current_user.username %>
+        <%= hidden_field_tag :from_id , current_user.id %>
+        <br>
+        <%= submit_tag("Send") %>
+      <% end %>
+      <h2>This message will be sent to <%=@offer.user.username%> </h2>
+     </div>
+    <%else%>
+      <h2><%= link_to('Login', new_user_session_path)%> to send <%= @offer.user.username %> a message </h2>
+    <%end%>
+</div>

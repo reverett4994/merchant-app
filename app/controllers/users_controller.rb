@@ -23,8 +23,7 @@ class UsersController < ApplicationController
     @to_email= params[:to_email]
     @message=params[:message]
     UserMailer.user_question(@from,@to,@from_id,@to_email,@message).deliver
-    redirect_to(:back)
-    flash[:notice] = "Your Email has been sent to #{@to}"
+    redirect_to page_path('sent_offer')
 
   end
 end
