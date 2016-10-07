@@ -1,0 +1,14 @@
+
+<div id=user_search>
+  <% if @users.length<1 %>
+    <h2>Sorry there was no matches :(</h2>
+  <%else%>
+    <h2>There was mutple matches! Here they are: </h2>
+    <%@users.each do |p|%>
+    <div class='username'>
+      <%= link_to "#{p.username}","/users/#{p.id}" %>
+    </div>
+      <br>
+    <%end%>
+  <%end%>
+</div>

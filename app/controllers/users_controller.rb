@@ -13,7 +13,19 @@ class UsersController < ApplicationController
         @comments+=Comment.where('ITEM_ID LIKE ? AND CREATED_AT >= CURDATE()- INTERVAL 1 DAY',dog)
       end
     end
+  end
 
+  def search
+    @search = params[:search]
+    if @search.length < 4
+      redirect_to :back
+      flash[:alert] = "User Search has to be at least 4 characters long"
+    end
+    @users=User.where('username LIKE ?','%'+@search+'%')
+    if @users.length == 1
+      @user=@users[0]
+      redirect_to "/users/#{@user.id}"
+    end
   end
 
   def user_to_user

@@ -1,7 +1,9 @@
-<%= link_to 'Edit Info', edit_item_path %> <br>
-<%= link_to 'Show Listing', @item %>
+<div id=dog_form>
 
-<h2>Add/Remove Images for <%= @item.name %> Here!</h2>
+<%= link_to 'Edit Dog Info', edit_item_path %> <br>
+<%= link_to 'View Dog Listing', @item %>
+
+<h2>Add Images for <%= @item.name %> Here</h2>
 
 <%= form_for(@item_album) do |f| %>
   <% if @item_album.errors.any? %>
@@ -17,10 +19,9 @@
   <%= hidden_field_tag(:item, params[:id]) %>
   <%= f.file_field :image %>
   <div class="actions">
-    <%= f.submit "Add Image" %>
+    <%= f.submit "Add Selected Image",class:'button_user' %>
   </div>
 <% end %>
-</div>
 <h2>Remove any current pictures</h2>
 <%@item.item_album.each do |f| %>
   <table>
@@ -32,6 +33,5 @@
    </tr>
  </table>
 
-
- <%= link_to 'Show Listing', @item %>
 <% end %>
+</div>

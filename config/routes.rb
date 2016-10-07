@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       get 'users/:id' => 'users#show'
       get 'email_user' => 'users#user_to_user',as: :email_user
       get 'items/:id/editpictures' => 'items#editpictures', as: :edit_pics
-
+      get 'username/search'=> 'users#search', as: :username_search
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 

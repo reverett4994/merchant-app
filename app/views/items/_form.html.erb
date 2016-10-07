@@ -32,8 +32,12 @@
     <%= f.text_field :price %>
   </div>
   <div class="field">
-    <%= f.label :price,'Check if its a Adoption (price will be 0)' %><br>
+    <%= f.label :price,'Check if its a Adoption (price will be 0)' %>
+
+    <div class='check'>
     <%= f.check_box :price,{},0,false %>
+  </div>
+
   </div>
   <div class="field">
     <%= f.label :des,'Description' %><br>
@@ -44,9 +48,9 @@
     <%= f.text_field :zip,:value => current_user.zip %>
   </div>
   <%= f.hidden_field :id, :value => params[:id] %>
-<h3>Add images on edit page</h3>
+  <h2>(Dont Worry You Can Add Images on Next Page)</h2>
   <div class="actions">
-    <%= f.submit 'List Item' %>
+    <%= f.submit 'List Item',class:'button_user' %>
   </div>
 
 <% end %>

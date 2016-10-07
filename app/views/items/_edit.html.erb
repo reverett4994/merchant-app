@@ -1,5 +1,4 @@
 <% if @item.user == current_user%>
-<%= link_to 'Edit Pictures', edit_pics_path %>
   <%= form_for(@item) do |f| %>
     <% if @item.errors.any? %>
       <div id="error_explanation">
@@ -42,8 +41,9 @@
       <%= f.text_field :zip %>
     </div>
     <div class="actions">
-      <%= f.submit 'Edit Listing' %>
+      <%= f.submit 'Edit Listing',class:'button_user' %>
     </div>
+    <%= link_to "Edit Pictures for #{@item.name}", edit_pics_path %>
 
   <% end %>
 <%end%>
