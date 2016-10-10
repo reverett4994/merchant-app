@@ -31,6 +31,8 @@
       <li><strong>Gender</strong>: <%=dog.gender%></li>
       <li><strong>Age(months)</strong>: <%=dog.age%></li>
       <li><strong>Price</strong>: <%=number_to_currency(dog.price)%></li>
+      <li class='phone_location'><strong>City/State</strong>: <%=@location%></li>
+
       <li>
         <% time_diffrence_comment=TimeDifference.between(dog.created_at, Time.current).in_general %>
 

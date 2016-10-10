@@ -37,7 +37,9 @@ class MessagesController < ApplicationController
         format.html { redirect_to page_path('sent_offer') }
         format.json { render :show, status: :created, location: @message }
       else
-        format.html { render :new }
+        format.html { redirect_to :back }
+        flash[:alert] = "An error has occurred, Please try again."
+
         format.json { render json: @message.errors, status: :unprocessable_entity }
       end
     end
