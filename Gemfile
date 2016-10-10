@@ -66,3 +66,11 @@ gem 'google_maps_api-distance_matrix'
 gem 'validates_zipcode'
 #FOR STATIC PAGEs
 gem 'high_voltage', '~> 3.0.0'
+
+
+
+#NOT SURE WHAT THESE DO JUST FROM PRIOR APPS
+gem 'rails_12factor', group: :production
+
+gem 'rails_stdout_logging'
+gem 'rails_serve_static_assets'
