@@ -31,6 +31,6 @@ class UserMailer < ApplicationMailer
     @to_username=to_username
     @from_username=from_username
     @message=messagee
-    mail(to:to,subject:'Message from a user')
+    mail(to:to,subject:'Message from a user',from:"Dog-Deal.com")
   end
 end
