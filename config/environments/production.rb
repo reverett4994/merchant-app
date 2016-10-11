@@ -80,6 +80,8 @@ Rails.application.configure do
   config.assets.initialize_on_precompile = false
 
   config.action_mailer.default_url_options = { host: 'dog-deal.com'}
+  config.mailer_sender = 'Dog-Deal.com'
+
   config.action_mailer.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
     :user_name => ENV['SENDGRID_USERNAME'],
