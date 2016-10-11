@@ -996,6 +996,7 @@ transition-duration: 0.4s;
     margin-left: 40px;
     margin-top: -20px;
   }
+}
 @media only screen and (max-width: 340px){
 
   #header #login{
